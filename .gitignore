@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+
+# Environments
+.env
+.venv
+env/
+venv/
+*.egg
+
+# Data
+data/RDD2022/
+*.pth
+*.pt
+*.onnx
+*.weights
+
+# IDE
+.vscode/
+.idea/
+
+# Training outputs
+runs/
+wandb/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
