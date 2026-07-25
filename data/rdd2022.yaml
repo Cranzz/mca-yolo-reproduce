@@ -1,0 +1,10 @@
+# RDD2022 China_MotorBike 数据集配置
+# 训练 YOLOv8 用
+
+path: /Users/zhangkai/Desktop/mca-yolo-reproduce/data/yolo_format
+train: train/images
+val: val/images
+test: test/images
+
+nc: 4
+names: ['D00', 'D10', 'D20', 'D40']
