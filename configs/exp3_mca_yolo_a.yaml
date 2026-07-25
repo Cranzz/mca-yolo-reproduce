@@ -1,0 +1,8 @@
+# 实验3: MobileNetV3 + CA + P2 + Alpha-IOU (完整 MCA-YOLO-A)
+model: models/yolov8n_mbv3_ca.yaml
+data: data/rdd2022.yaml
+epochs: 100
+imgsz: 640
+batch: 16
+name: exp3_mca_yolo_a
+iou: 0.2

@@ -1,0 +1,7 @@
+# Baseline 实验配置
+model: models/yolov8n_baseline.yaml
+data: data/rdd2022.yaml
+epochs: 100
+imgsz: 640
+batch: 16
+name: baseline

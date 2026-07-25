@@ -1,0 +1,7 @@
+# 实验1: + 小目标检测层
+model: models/yolov8n_smallhead.yaml
+data: data/rdd2022.yaml
+epochs: 100
+imgsz: 640
+batch: 16
+name: exp1_smallhead
