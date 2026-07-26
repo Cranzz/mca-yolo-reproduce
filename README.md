@@ -17,11 +17,14 @@ mca-yolo-reproduce/
 │   └── modules/                   # 自定义模块（TODO）
 ├── scripts/                 # 训练脚本
 │   ├── train_baseline.py          # 本地 baseline 训练
+│   ├── train_exp1_mobilenetv3.py  # Exp1：MobileNetV3 主干训练
+│   ├── train_exp1_mobilenetv3_colab.ipynb # Exp1：Colab 云端训练
 │   ├── train_mca_yolo_a.py        # 完整 MCA-YOLO-A 复现
 │   ├── train_colab.ipynb          # Colab GPU 训练 Notebook
 │   └── convert_xml_to_yolo.py     # VOC XML → YOLO txt 转换
 ├── configs/                 # 实验配置文件
 │   ├── baseline.yaml
+│   ├── exp1_mobilenetv3.yaml
 │   ├── exp1_smallhead.yaml
 │   ├── exp2_alpha_iou.yaml
 │   └── exp3_mca_yolo_a.yaml
@@ -73,3 +76,7 @@ mca-yolo-reproduce/
 ## Colab 训练
 
 在 [Google Colab](https://colab.research.google.com) 上传 `scripts/train_colab.ipynb`，切换 T4 GPU 后依次运行所有单元格即可。代码和数据会自动从 GitHub 拉取。
+
+## Exp1 训练
+
+在 Colab 中打开 `scripts/train_exp1_mobilenetv3_colab.ipynb`，训练仅替换 MobileNetV3 主干的 Exp1。脚本使用当前 `data/rdd2022.yaml` 中的1977张有标注图片，默认训练100轮、输入尺寸640、batch size为16。

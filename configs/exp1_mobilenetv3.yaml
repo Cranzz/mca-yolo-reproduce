@@ -1,0 +1,7 @@
+# 实验1：仅替换MobileNetV3主干网络
+model: models/yolov8n_mobilenetv3.yaml
+data: data/rdd2022.yaml
+epochs: 100
+imgsz: 640
+batch: 16
+name: exp1_mobilenetv3
