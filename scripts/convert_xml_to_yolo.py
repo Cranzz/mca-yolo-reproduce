@@ -11,8 +11,11 @@ CLASS_MAP = {
     "D40": 3,
 }
 
-DATA_DIR = os.path.expanduser("~/Desktop/mca-yolo-reproduce/data/China_MotorBike/train")
-OUTPUT_DIR = os.path.expanduser("~/Desktop/mca-yolo-reproduce/data/yolo_format")
+# Only the original train split has XML annotations in the local dataset.
+# The original test/images directory is intentionally excluded.
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_DIR, "data", "China_MotorBike", "train")
+OUTPUT_DIR = os.path.join(PROJECT_DIR, "data", "yolo_format")
 
 TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.7, 0.15, 0.15
 

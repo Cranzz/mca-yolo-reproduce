@@ -1,7 +1,7 @@
 # RDD2022 China_MotorBike 数据集配置
-# 训练 YOLOv8 用
+# 本地复现使用 train 中 1977 张带 XML 标注的图片，按 7:1.5:1.5 划分
 
-path: /Users/zhangkai/Desktop/mca-yolo-reproduce/data/yolo_format
+path: /Users/zhangkai/Documents/mca-yolo-reproduce/data/yolo_format
 train: train/images
 val: val/images
 test: test/images

@@ -33,6 +33,8 @@ mca-yolo-reproduce/
 
 ## 数据集
 
+本地复现使用 `China_MotorBike/train` 中具有 XML 标注的 1977 张图片，并按固定随机种子 42 划分为训练集 1383 张、验证集 296 张、测试集 298 张。原始 `test/images` 中的约500张图片没有XML标注，因此不纳入监督训练和评估。
+
 | 数据集 | 说明 | 下载源 |
 |---|---|---|
 | RDD2022 China_MotorBike | 论文主数据集，2477 张中国道路裂缝图 | [官方 S3 链接](https://bigdatacup.s3.ap-northeast-1.amazonaws.com/2022/CRDDC2022/RDD2022/Country_Specific_Data_CRDDC2022/RDD2022_China_MotorBike.zip) |
