@@ -8,7 +8,8 @@ scales:
 # TorchVision MobileNetV3-Small feature stages:
 # P3 = 80x80, P4 = 40x40, P5 = 20x20 for a 640x640 input.
 backbone:
-  - [-1, 1, TorchVision, [576, mobilenet_v3_small, DEFAULT, True, 0, True]]
+  # truncate=2 removes MobileNetV3's avgpool and classifier layers.
+  - [-1, 1, TorchVision, [576, mobilenet_v3_small, DEFAULT, True, 2, True]]
   - [0, 1, Index, [40, 6]]
   - [0, 1, Index, [48, 8]]
   - [0, 1, Index, [576, 12]]
