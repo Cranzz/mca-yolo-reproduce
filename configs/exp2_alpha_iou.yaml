@@ -1,8 +1,0 @@
-# 实验2: + 小目标检测层 + Alpha-IOU
-model: models/yolov8n_alpha_iou.yaml
-data: data/rdd2022.yaml
-epochs: 100
-imgsz: 640
-batch: 16
-name: exp2_alpha_iou
-iou: 0.2

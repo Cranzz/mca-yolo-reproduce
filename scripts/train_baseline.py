@@ -19,7 +19,7 @@ model = YOLO("yolov8n.pt")
 
 # 开始训练
 results = model.train(
-    data="/Users/zhangkai/Desktop/mca-yolo-reproduce/data/rdd2022.yaml",
+    data="/Users/zhangkai/Documents/mca-yolo-reproduce/data/rdd2022.yaml",
     epochs=100,
     imgsz=640,
     batch=16,
