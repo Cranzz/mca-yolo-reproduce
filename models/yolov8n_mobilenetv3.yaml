@@ -10,9 +10,10 @@ scales:
 backbone:
   # truncate=2 removes MobileNetV3's avgpool and classifier layers.
   - [-1, 1, TorchVision, [576, mobilenet_v3_small, DEFAULT, True, 2, True]]
-  - [0, 1, Index, [40, 6]]
+  # TorchVision split output starts with the original input at index 0.
+  - [0, 1, Index, [24, 3]]
   - [0, 1, Index, [48, 8]]
-  - [0, 1, Index, [576, 12]]
+  - [0, 1, Index, [576, 13]]
 
 head:
   - [3, 1, Conv, [256, 1, 1]]

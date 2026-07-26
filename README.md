@@ -17,7 +17,7 @@ mca-yolo-reproduce/
 │   └── modules/                   # 自定义模块（TODO）
 ├── scripts/                 # 训练脚本
 │   ├── train_baseline.py          # 本地 baseline 训练
-│   ├── train_exp1_mobilenetv3.py  # Exp1：MobileNetV3 主干训练
+│   ├── train_exp1_mobilenetv3.py  # Exp1：MobileNetV3主干训练（本地/云端通用）
 │   ├── train_exp1_mobilenetv3_colab.ipynb # Exp1：Colab 云端训练
 │   ├── train_mca_yolo_a.py        # 完整 MCA-YOLO-A 复现
 │   ├── train_colab.ipynb          # Colab GPU 训练 Notebook
