@@ -12,22 +12,22 @@ mca-yolo-reproduce/
 ├── data/                    # 数据集（RDD2022 China_MotorBike + yolo_format）
 ├── models/                  # 模型定义 yaml
 │   ├── yolov8n_baseline.yaml      # baseline（原始 YOLOv8n）
-│   ├── yolov8n_smallhead.yaml     # + 小目标检测层 (P2, 160x160)
-│   ├── yolov8n_alpha_iou.yaml     # + P2 + Alpha-IOU
-│   └── modules/                   # 自定义模块（TODO）
+│   ├── yolov8n_mobilenetv3.yaml  # Exp1：MobileNetV3 主干
+│   ├── yolov8n_mobilenetv3_ca.yaml # Exp2：MobileNetV3 + CA
+│   └── modules/                   # Coordinate Attention 等自定义模块
 ├── scripts/                 # 训练脚本
 │   ├── train_baseline.py          # 本地 baseline 训练
 │   ├── train_exp1_mobilenetv3.py  # Exp1：MobileNetV3主干训练（本地/云端通用）
 │   ├── train_exp1_mobilenetv3_colab.ipynb # Exp1：Colab 云端训练
+│   ├── train_exp2_mobilenetv3_ca.py # Exp2：MobileNetV3 + CA（本地/云端通用）
+│   ├── train_exp2_mobilenetv3_ca_colab.ipynb # Exp2：Colab 云端训练
 │   ├── train_mca_yolo_a.py        # 完整 MCA-YOLO-A 复现
 │   ├── train_colab.ipynb          # Colab GPU 训练 Notebook
 │   └── convert_xml_to_yolo.py     # VOC XML → YOLO txt 转换
 ├── configs/                 # 实验配置文件
 │   ├── baseline.yaml
 │   ├── exp1_mobilenetv3.yaml
-│   ├── exp1_smallhead.yaml
-│   ├── exp2_alpha_iou.yaml
-│   └── exp3_mca_yolo_a.yaml
+│   └── exp2_mobilenetv3_ca.yaml
 ├── runs/                    # 训练结果（自动生成）
 ├── data/rdd2022.yaml        # 数据集配置
 ├── .gitignore
@@ -53,20 +53,27 @@ mca-yolo-reproduce/
 
 - [x] 环境搭建 + 数据准备
 - [x] baseline（YOLOv8n）训练完成
-- [ ] Exp1：+ 小目标检测层
-- [ ] Exp2：+ 小目标检测层 + Alpha-IOU
-- [ ] Exp3：+ MobileNetV3 + CA + P2 + Alpha-IOU（完整 MCA-YOLO-A）
+- [x] Exp1：MobileNetV3 主干网络
+- [ ] Exp2：MobileNetV3 + CA 注意力
+- [ ] Exp3：MobileNetV3 + CA + Alpha-IOU
+- [ ] Exp4：MobileNetV3 + CA + Alpha-IOU + P2（完整 MCA-YOLO-A）
 - [ ] 多模型对比分析
 
 ## 实验结果
 
-| 模型 | mAP50 | 参数量 | FPS |
-|---|---|---|---|
-| YOLOv8n (baseline) | TBD | — | — |
-| + 小目标层 | TBD | — | — |
-| + Alpha-IOU | TBD | — | — |
-| **MCA-YOLO-A (论文)** | **0.930** | **6.0M** | **95** |
-| MCA-YOLO-A (复现) | TBD | TBD | TBD |
+当前结果均基于1977张有XML标注图片，划分为1383/296/298，Exp1结果来自298张测试图片。
+
+| 模型 | mAP50 | mAP50-95 | 参数量 | FPS |
+|---|---|---|---|---|
+| YOLOv8n (baseline) | TBD | — | — | TBD |
+| + MobileNetV3（Exp1） | **0.8916** | **0.5318** | **1.727M** | TBD |
+| + MobileNetV3 + CA（Exp2） | TBD | — | — | TBD |
+| + MobileNetV3 + CA + Alpha-IOU（Exp3） | TBD | — | — | TBD |
+| + MobileNetV3 + CA + Alpha-IOU + P2（Exp4） | TBD | — | — | TBD |
+| **MCA-YOLO-A (论文)** | **0.930** | — | **6.0M** | **95** |
+| MCA-YOLO-A (复现) | TBD | TBD | TBD | TBD |
+
+Exp1测试集Precision为0.914，Recall为0.820；训练使用SGD、100轮、640输入尺寸和batch size 16。
 
 ## 复现参考
 
@@ -80,3 +87,13 @@ mca-yolo-reproduce/
 ## Exp1 训练
 
 在 Colab 中打开 `scripts/train_exp1_mobilenetv3_colab.ipynb`，训练仅替换 MobileNetV3 主干的 Exp1。脚本使用当前 `data/rdd2022.yaml` 中的1977张有标注图片，默认训练100轮、输入尺寸640、batch size为16。
+
+## Exp2 训练
+
+Exp2 在 Exp1 基础上，将 MobileNetV3-Small 瓶颈中的9个 SE 注意力模块替换为 Coordinate Attention，检测头、损失函数和输入尺寸保持不变。本地或通用云主机运行：
+
+```bash
+python scripts/train_exp2_mobilenetv3_ca.py
+```
+
+在 Colab 中打开 `scripts/train_exp2_mobilenetv3_ca_colab.ipynb`，切换到 T4 GPU 后依次运行。训练参数与 Exp1 保持一致：SGD、100轮、640输入尺寸、batch size 16、`lr0=0.01`、`momentum=0.937`。

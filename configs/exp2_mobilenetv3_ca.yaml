@@ -1,0 +1,10 @@
+# 实验2：MobileNetV3主干 + CA注意力
+model: models/yolov8n_mobilenetv3_ca.yaml
+data: data/rdd2022.yaml
+epochs: 100
+imgsz: 640
+batch: 16
+optimizer: SGD
+lr0: 0.01
+momentum: 0.937
+name: exp2_mobilenetv3_ca
