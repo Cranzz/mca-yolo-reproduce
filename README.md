@@ -21,13 +21,16 @@ mca-yolo-reproduce/
 │   ├── train_exp1_mobilenetv3_colab.ipynb # Exp1：Colab 云端训练
 │   ├── train_exp2_mobilenetv3_ca.py # Exp2：MobileNetV3 + CA（本地/云端通用）
 │   ├── train_exp2_mobilenetv3_ca_colab.ipynb # Exp2：Colab 云端训练
+│   ├── train_exp3_mobilenetv3_ca_alpha_iou.py # Exp3：+ Alpha-IoU（本地/云端通用）
+│   ├── train_exp3_mobilenetv3_ca_alpha_iou_colab.ipynb # Exp3：Colab 云端训练
 │   ├── train_mca_yolo_a.py        # 完整 MCA-YOLO-A 复现
 │   ├── train_colab.ipynb          # Colab GPU 训练 Notebook
 │   └── convert_xml_to_yolo.py     # VOC XML → YOLO txt 转换
 ├── configs/                 # 实验配置文件
 │   ├── baseline.yaml
 │   ├── exp1_mobilenetv3.yaml
-│   └── exp2_mobilenetv3_ca.yaml
+│   ├── exp2_mobilenetv3_ca.yaml
+│   └── exp3_mobilenetv3_ca_alpha_iou.yaml
 ├── runs/                    # 训练结果（自动生成）
 ├── data/rdd2022.yaml        # 数据集配置
 ├── .gitignore
@@ -54,8 +57,8 @@ mca-yolo-reproduce/
 - [x] 环境搭建 + 数据准备
 - [x] baseline（YOLOv8n）训练完成
 - [x] Exp1：MobileNetV3 主干网络
-- [ ] Exp2：MobileNetV3 + CA 注意力
-- [ ] Exp3：MobileNetV3 + CA + Alpha-IOU
+- [x] Exp2：MobileNetV3 + CA 注意力
+- [ ] Exp3：MobileNetV3 + CA + Alpha-IOU（代码已完成，待训练）
 - [ ] Exp4：MobileNetV3 + CA + Alpha-IOU + P2（完整 MCA-YOLO-A）
 - [ ] 多模型对比分析
 
@@ -66,14 +69,14 @@ mca-yolo-reproduce/
 | 模型 | mAP50 | mAP50-95 | 参数量 | FPS |
 |---|---|---|---|---|
 | YOLOv8n (baseline) | TBD | — | — | TBD |
-| + MobileNetV3（Exp1） | **0.8916** | **0.5318** | **1.727M** | TBD |
-| + MobileNetV3 + CA（Exp2） | TBD | — | — | TBD |
+| + MobileNetV3（Exp1） | **0.8801** | **0.5167** | **1.727M** | TBD |
+| + MobileNetV3 + CA（Exp2） | **0.8923** | **0.5264** | **1.361M** | TBD |
 | + MobileNetV3 + CA + Alpha-IOU（Exp3） | TBD | — | — | TBD |
 | + MobileNetV3 + CA + Alpha-IOU + P2（Exp4） | TBD | — | — | TBD |
 | **MCA-YOLO-A (论文)** | **0.930** | — | **6.0M** | **95** |
 | MCA-YOLO-A (复现) | TBD | TBD | TBD | TBD |
 
-Exp1测试集Precision为0.914，Recall为0.820；训练使用SGD、100轮、640输入尺寸和batch size 16。
+Exp1测试集Precision为0.879，Recall为0.828；Exp2测试集Precision为0.877，Recall为0.828。两组均使用SGD、100轮、640输入尺寸和batch size 16。
 
 ## 复现参考
 
@@ -97,3 +100,13 @@ python scripts/train_exp2_mobilenetv3_ca.py
 ```
 
 在 Colab 中打开 `scripts/train_exp2_mobilenetv3_ca_colab.ipynb`，切换到 T4 GPU 后依次运行。训练参数与 Exp1 保持一致：SGD、100轮、640输入尺寸、batch size 16、`lr0=0.01`、`momentum=0.937`。
+
+## Exp3 训练
+
+Exp3 在 Exp2 基础上只替换边界框回归损失：将 YOLOv8 的 CIoU 替换为论文公式对应的 Alpha-CIoU，DFL、模型结构和训练参数不变。论文正文未明确给出 alpha 数值，本实现按项目原有草稿和常用设置采用 `alpha=3.0`。
+
+```bash
+python scripts/train_exp3_mobilenetv3_ca_alpha_iou.py
+```
+
+Colab 版本为 `scripts/train_exp3_mobilenetv3_ca_alpha_iou_colab.ipynb`。
